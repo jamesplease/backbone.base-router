@@ -13,12 +13,11 @@ lets you associate whatever you'd like with a route. It can be a callback if you
 but it can also be an object, or a string.
 
 Whenever a Route is matched, a single method on the Router is called. This method is passed a single
-argument, `routeData`, that contains as much about the matched route as possible. In this object are parsed
-query parameters, named fragment params, and the object you associated with the route, among other useful
-data. This single point-of-entry, combined with all of this data, makes it remarkably easy to add new
-abstractions to the Router.
+argument, `routeData`, that contains as much about the matched route as possible. Included this object are parsed
+query parameters, named fragment params, and the object you associated with the route, among other things. This
+single point-of-entry, combined with all of this data, makes it remarkably easy to add new abstractions to the Router.
 
-### What problems **doesn't** this library solve?
+### What problems *doesn't* this library solve?
 
 This library is not an effort to rewrite Backbone.history. As such, some of History's quirks are carried
 over, too. For instance, the order that you specify your callbacks in *still* matters, as this is how `Backbone.History` matches routes.
@@ -117,13 +116,19 @@ want. Or just leave them out. It's entirely up to you.
 
 ### Accessing the options passed to `route`
 
-When you call the `route` method, you can pass options.
+As you might already know, you can pass options when you call the `route` method.
 
 ```js
-myRouter.route('some/path', {myOption: true});
+myRouter.navigate('some/path', {myOption: true});
 ```
 
-This Router – and all Backbone.Routers – do not get these options back. They're sent off to History and
-not returned. Because this library is *just* a Router, it doesn't let you access those options. However, by
-using this library in conjunction with [Backbone.BaseHistory](https://github.com/jmeas/backbone.base-history)
-you will receive an extra parameter in your `onNavigate` callback, `navOptions`, which are those options.
+Backbone Routers do not get these options back. They're sent off to History, which does not
+return them. Because this library is *just* a Router, it doesn't let you access those options. However, if you want
+these options you can use [Backbone.BaseHistory](https://github.com/jmeas/backbone.base-history) in conjunction
+with this library. If you use that library you will receive those options in your `routeData` as a property
+called `navOptions`.
+
+```js
+var BaseHistory = require('BaseHistory');
+myRoute.history = new baseHistory();
+```
