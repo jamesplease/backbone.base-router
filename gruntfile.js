@@ -90,7 +90,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build', 'Build the library', [
     'test',
-    'preprocess:intercept',
+    'preprocess',
     'template',
     'concat',
     'uglify'
