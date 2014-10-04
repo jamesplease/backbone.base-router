@@ -1,6 +1,7 @@
 var Model = Backbone.Model.extend({
 
-  // We're going to override fetch to simply return a promise after a moment
+  // Because I don't actually want to fetch any data for this example,
+  // I'm overriding the method to return a Promise that resolves after 1s has passed.
   fetch: function() {
     return new Promise(function(resolve) {
       window.setTimeout(function() {
