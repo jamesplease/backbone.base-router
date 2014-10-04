@@ -2,14 +2,10 @@ describe('Base Router', function() {
   beforeEach(function() {
     this.router = new Backbone.BaseRouter();
     var suite = this;
-    this.router.onNavigate = function(options) {
-      suite.options = options;
+    this.router.onNavigate = function(routeData) {
+      suite.routeData = routeData;
     };
     this.sinon.spy(this.router, 'onNavigate');
-  });
-
-  afterEach(function() {
-    delete this.options;
   });
 
   describe('when routing to a matched route with pushState', function() {
@@ -25,35 +21,35 @@ describe('Base Router', function() {
     });
 
     it('should pass the correct arguments to onNavigate', function() {
-      expect(this.options).to.have.keys(this.regularKeys);
+      expect(this.routeData).to.have.keys(this.regularKeys);
     });
 
     it('should pass the object that was linked with the route', function() {
-      expect(this.options.linked).to.deep.equal({hungry: true});
+      expect(this.routeData.linked).to.deep.equal({hungry: true});
     });
 
     it('should pass the Router instance', function() {
-      expect(this.options.router).to.equal(this.router);
+      expect(this.routeData.router).to.equal(this.router);
     });
 
     it('should pass the original matched Route', function() {
-      expect(this.options.originalRoute).to.equal('example');
+      expect(this.routeData.originalRoute).to.equal('example');
     });
 
     it('should pass the current URI fragment', function() {
-      expect(this.options.uriFragment).to.equal('example');
+      expect(this.routeData.uriFragment).to.equal('example');
     });
 
     it('should pass a Regular expression as the route', function() {
-      expect(this.options.route).to.be.instanceOf(RegExp);
+      expect(this.routeData.route).to.be.instanceOf(RegExp);
     });
 
     it('should pass an empty object for query params', function() {
-      expect(this.options.query).to.deep.equal({});
+      expect(this.routeData.query).to.deep.equal({});
     });
 
     it('should pass an empty object for named params', function() {
-      expect(this.options.params).to.deep.equal({});
+      expect(this.routeData.params).to.deep.equal({});
     });
   });
 
@@ -70,35 +66,35 @@ describe('Base Router', function() {
     });
 
     it('should pass the correct arguments to onNavigate', function() {
-      expect(this.options).to.have.keys(this.regularKeys);
+      expect(this.routeData).to.have.keys(this.regularKeys);
     });
 
     it('should pass the object that was linked with the route', function() {
-      expect(this.options.linked).to.deep.equal({hungry: true});
+      expect(this.routeData.linked).to.deep.equal({hungry: true});
     });
 
     it('should pass the Router instance', function() {
-      expect(this.options.router).to.equal(this.router);
+      expect(this.routeData.router).to.equal(this.router);
     });
 
     it('should pass the original matched Route', function() {
-      expect(this.options.originalRoute).to.equal('example');
+      expect(this.routeData.originalRoute).to.equal('example');
     });
 
     it('should pass the current URI fragment', function() {
-      expect(this.options.uriFragment).to.equal('example');
+      expect(this.routeData.uriFragment).to.equal('example');
     });
 
     it('should pass a Regular expression as the route', function() {
-      expect(this.options.route).to.be.instanceOf(RegExp);
+      expect(this.routeData.route).to.be.instanceOf(RegExp);
     });
 
     it('should pass an empty object for query params', function() {
-      expect(this.options.query).to.deep.equal({});
+      expect(this.routeData.query).to.deep.equal({});
     });
 
     it('should pass an empty object for named params', function() {
-      expect(this.options.params).to.deep.equal({});
+      expect(this.routeData.params).to.deep.equal({});
     });
   });
 
@@ -115,31 +111,31 @@ describe('Base Router', function() {
     });
 
     it('should pass the object that was linked with the route', function() {
-      expect(this.options.linked).to.deep.equal(this.callback);
+      expect(this.routeData.linked).to.deep.equal(this.callback);
     });
 
     it('should pass the Router instance', function() {
-      expect(this.options.router).to.equal(this.router);
+      expect(this.routeData.router).to.equal(this.router);
     });
 
     it('should pass the original matched Route', function() {
-      expect(this.options.originalRoute).to.equal('books/:id/chapter/:chapter');
+      expect(this.routeData.originalRoute).to.equal('books/:id/chapter/:chapter');
     });
 
     it('should pass the current URI fragment', function() {
-      expect(this.options.uriFragment).to.equal('books/2/chapter/4');
+      expect(this.routeData.uriFragment).to.equal('books/2/chapter/4');
     });
 
     it('should pass a Regular expression as the route', function() {
-      expect(this.options.route).to.be.instanceOf(RegExp);
+      expect(this.routeData.route).to.be.instanceOf(RegExp);
     });
 
     it('should pass an empty object for query params', function() {
-      expect(this.options.query).to.deep.equal({});
+      expect(this.routeData.query).to.deep.equal({});
     });
 
     it('should pass the parsed URI params', function() {
-      expect(this.options.params).to.deep.equal({id: '2', chapter: '4'});
+      expect(this.routeData.params).to.deep.equal({id: '2', chapter: '4'});
     });
   });
 
@@ -156,31 +152,31 @@ describe('Base Router', function() {
     });
 
     it('should pass the object that was linked with the route', function() {
-      expect(this.options.linked).to.deep.equal(this.callback);
+      expect(this.routeData.linked).to.deep.equal(this.callback);
     });
 
     it('should pass the Router instance', function() {
-      expect(this.options.router).to.equal(this.router);
+      expect(this.routeData.router).to.equal(this.router);
     });
 
     it('should pass the original matched Route', function() {
-      expect(this.options.originalRoute).to.equal('books/:id/chapter/:chapter');
+      expect(this.routeData.originalRoute).to.equal('books/:id/chapter/:chapter');
     });
 
     it('should pass the current URI fragment', function() {
-      expect(this.options.uriFragment).to.equal('books/2/chapter/4');
+      expect(this.routeData.uriFragment).to.equal('books/2/chapter/4');
     });
 
     it('should pass a Regular expression as the route', function() {
-      expect(this.options.route).to.be.instanceOf(RegExp);
+      expect(this.routeData.route).to.be.instanceOf(RegExp);
     });
 
     it('should pass an empty object for query params', function() {
-      expect(this.options.query).to.deep.equal({});
+      expect(this.routeData.query).to.deep.equal({});
     });
 
     it('should pass the parsed URI params', function() {
-      expect(this.options.params).to.deep.equal({id: '2', chapter: '4'});
+      expect(this.routeData.params).to.deep.equal({id: '2', chapter: '4'});
     });
   });
 
@@ -197,31 +193,31 @@ describe('Base Router', function() {
     });
 
     it('should pass the object that was linked with the route', function() {
-      expect(this.options.linked).to.deep.equal(this.callback);
+      expect(this.routeData.linked).to.deep.equal(this.callback);
     });
 
     it('should pass the Router instance', function() {
-      expect(this.options.router).to.equal(this.router);
+      expect(this.routeData.router).to.equal(this.router);
     });
 
     it('should pass the original matched Route', function() {
-      expect(this.options.originalRoute).to.equal('example');
+      expect(this.routeData.originalRoute).to.equal('example');
     });
 
     it('should pass the current URI fragment', function() {
-      expect(this.options.uriFragment).to.equal('example?james=true&hungry=3');
+      expect(this.routeData.uriFragment).to.equal('example?james=true&hungry=3');
     });
 
     it('should pass a Regular expression as the route', function() {
-      expect(this.options.route).to.be.instanceOf(RegExp);
+      expect(this.routeData.route).to.be.instanceOf(RegExp);
     });
 
     it('should pass the parsed query params', function() {
-      expect(this.options.query).to.deep.equal({james: 'true', hungry: '3'});
+      expect(this.routeData.query).to.deep.equal({james: 'true', hungry: '3'});
     });
 
     it('should pass an empty object for named params', function() {
-      expect(this.options.params).to.deep.equal({});
+      expect(this.routeData.params).to.deep.equal({});
     });
   });
 
@@ -238,31 +234,31 @@ describe('Base Router', function() {
     });
 
     it('should pass the object that was linked with the route', function() {
-      expect(this.options.linked).to.deep.equal(this.callback);
+      expect(this.routeData.linked).to.deep.equal(this.callback);
     });
 
     it('should pass the Router instance', function() {
-      expect(this.options.router).to.equal(this.router);
+      expect(this.routeData.router).to.equal(this.router);
     });
 
     it('should pass the original matched Route', function() {
-      expect(this.options.originalRoute).to.equal('example');
+      expect(this.routeData.originalRoute).to.equal('example');
     });
 
     it('should pass the current URI fragment', function() {
-      expect(this.options.uriFragment).to.equal('example?james=true&hungry=3');
+      expect(this.routeData.uriFragment).to.equal('example?james=true&hungry=3');
     });
 
     it('should pass a Regular expression as the route', function() {
-      expect(this.options.route).to.be.instanceOf(RegExp);
+      expect(this.routeData.route).to.be.instanceOf(RegExp);
     });
 
     it('should pass the parsed query params', function() {
-      expect(this.options.query).to.deep.equal({james: 'true', hungry: '3'});
+      expect(this.routeData.query).to.deep.equal({james: 'true', hungry: '3'});
     });
 
     it('should pass an empty object for named params', function() {
-      expect(this.options.params).to.deep.equal({});
+      expect(this.routeData.params).to.deep.equal({});
     });
   });
 
@@ -279,31 +275,31 @@ describe('Base Router', function() {
     });
 
     it('should pass the object that was linked with the route', function() {
-      expect(this.options.linked).to.deep.equal(this.callback);
+      expect(this.routeData.linked).to.deep.equal(this.callback);
     });
 
     it('should pass the Router instance', function() {
-      expect(this.options.router).to.equal(this.router);
+      expect(this.routeData.router).to.equal(this.router);
     });
 
     it('should pass the original matched Route', function() {
-      expect(this.options.originalRoute).to.equal('example');
+      expect(this.routeData.originalRoute).to.equal('example');
     });
 
     it('should pass the current URI fragment', function() {
-      expect(this.options.uriFragment).to.equal('example?letters=a&letters=b&letters=c');
+      expect(this.routeData.uriFragment).to.equal('example?letters=a&letters=b&letters=c');
     });
 
     it('should pass a Regular expression as the route', function() {
-      expect(this.options.route).to.be.instanceOf(RegExp);
+      expect(this.routeData.route).to.be.instanceOf(RegExp);
     });
 
     it('should pass the parsed query params, not parsing the array-like syntax', function() {
-      expect(this.options.query).to.deep.equal({letters: 'c'});
+      expect(this.routeData.query).to.deep.equal({letters: 'c'});
     });
 
     it('should pass an empty object for named params', function() {
-      expect(this.options.params).to.deep.equal({});
+      expect(this.routeData.params).to.deep.equal({});
     });
   });
 
@@ -320,31 +316,31 @@ describe('Base Router', function() {
     });
 
     it('should pass the object that was linked with the route', function() {
-      expect(this.options.linked).to.deep.equal(this.callback);
+      expect(this.routeData.linked).to.deep.equal(this.callback);
     });
 
     it('should pass the Router instance', function() {
-      expect(this.options.router).to.equal(this.router);
+      expect(this.routeData.router).to.equal(this.router);
     });
 
     it('should pass the original matched Route', function() {
-      expect(this.options.originalRoute).to.equal('example');
+      expect(this.routeData.originalRoute).to.equal('example');
     });
 
     it('should pass the current URI fragment', function() {
-      expect(this.options.uriFragment).to.equal('example?letters=a&letters=b&letters=c');
+      expect(this.routeData.uriFragment).to.equal('example?letters=a&letters=b&letters=c');
     });
 
     it('should pass a Regular expression as the route', function() {
-      expect(this.options.route).to.be.instanceOf(RegExp);
+      expect(this.routeData.route).to.be.instanceOf(RegExp);
     });
 
     it('should pass the parsed query params, not parsing the array-like syntax', function() {
-      expect(this.options.query).to.deep.equal({letters: 'c'});
+      expect(this.routeData.query).to.deep.equal({letters: 'c'});
     });
 
     it('should pass an empty object for named params', function() {
-      expect(this.options.params).to.deep.equal({});
+      expect(this.routeData.params).to.deep.equal({});
     });
   });
 
@@ -361,31 +357,31 @@ describe('Base Router', function() {
     });
 
     it('should pass the object that was linked with the route', function() {
-      expect(this.options.linked).to.deep.equal(this.routeObj);
+      expect(this.routeData.linked).to.deep.equal(this.routeObj);
     });
 
     it('should pass the Router instance', function() {
-      expect(this.options.router).to.equal(this.router);
+      expect(this.routeData.router).to.equal(this.router);
     });
 
     it('should pass the original matched Route', function() {
-      expect(this.options.originalRoute).to.equal(':id/*splat');
+      expect(this.routeData.originalRoute).to.equal(':id/*splat');
     });
 
     it('should pass the current URI fragment', function() {
-      expect(this.options.uriFragment).to.equal('3/deeply/nested/splat');
+      expect(this.routeData.uriFragment).to.equal('3/deeply/nested/splat');
     });
 
     it('should pass a Regular expression as the route', function() {
-      expect(this.options.route).to.be.instanceOf(RegExp);
+      expect(this.routeData.route).to.be.instanceOf(RegExp);
     });
 
     it('should pass an empty object for query params', function() {
-      expect(this.options.query).to.deep.equal({});
+      expect(this.routeData.query).to.deep.equal({});
     });
 
     it('should pass the parsed named param', function() {
-      expect(this.options.params).to.deep.equal({id: '3'});
+      expect(this.routeData.params).to.deep.equal({id: '3'});
     });
   });
 
@@ -402,31 +398,31 @@ describe('Base Router', function() {
     });
 
     it('should pass the object that was linked with the route', function() {
-      expect(this.options.linked).to.deep.equal(this.routeObj);
+      expect(this.routeData.linked).to.deep.equal(this.routeObj);
     });
 
     it('should pass the Router instance', function() {
-      expect(this.options.router).to.equal(this.router);
+      expect(this.routeData.router).to.equal(this.router);
     });
 
     it('should pass the original matched Route', function() {
-      expect(this.options.originalRoute).to.equal(':id/*splat');
+      expect(this.routeData.originalRoute).to.equal(':id/*splat');
     });
 
     it('should pass the current URI fragment', function() {
-      expect(this.options.uriFragment).to.equal('3/deeply/nested/splat');
+      expect(this.routeData.uriFragment).to.equal('3/deeply/nested/splat');
     });
 
     it('should pass a Regular expression as the route', function() {
-      expect(this.options.route).to.be.instanceOf(RegExp);
+      expect(this.routeData.route).to.be.instanceOf(RegExp);
     });
 
     it('should pass an empty object for query params', function() {
-      expect(this.options.query).to.deep.equal({});
+      expect(this.routeData.query).to.deep.equal({});
     });
 
     it('should pass the parsed named param', function() {
-      expect(this.options.params).to.deep.equal({id: '3'});
+      expect(this.routeData.params).to.deep.equal({id: '3'});
     });
   });
 
@@ -442,31 +438,31 @@ describe('Base Router', function() {
     });
 
     it('should pass the object that was linked with the route', function() {
-      expect(this.options.linked).to.deep.equal(false);
+      expect(this.routeData.linked).to.deep.equal(false);
     });
 
     it('should pass the Router instance', function() {
-      expect(this.options.router).to.equal(this.router);
+      expect(this.routeData.router).to.equal(this.router);
     });
 
     it('should pass the original matched Route', function() {
-      expect(this.options.originalRoute).to.equal('*splat');
+      expect(this.routeData.originalRoute).to.equal('*splat');
     });
 
     it('should pass the current URI fragment', function() {
-      expect(this.options.uriFragment).to.equal('deeply/nested/splat?name=james');
+      expect(this.routeData.uriFragment).to.equal('deeply/nested/splat?name=james');
     });
 
     it('should pass a Regular expression as the route', function() {
-      expect(this.options.route).to.be.instanceOf(RegExp);
+      expect(this.routeData.route).to.be.instanceOf(RegExp);
     });
 
     it('should pass the parsed query params', function() {
-      expect(this.options.query).to.deep.equal({name: 'james'});
+      expect(this.routeData.query).to.deep.equal({name: 'james'});
     });
 
     it('should pass an empty object for the named params', function() {
-      expect(this.options.params).to.deep.equal({});
+      expect(this.routeData.params).to.deep.equal({});
     });
   });
 
@@ -482,31 +478,31 @@ describe('Base Router', function() {
     });
 
     it('should pass the object that was linked with the route', function() {
-      expect(this.options.linked).to.deep.equal(false);
+      expect(this.routeData.linked).to.deep.equal(false);
     });
 
     it('should pass the Router instance', function() {
-      expect(this.options.router).to.equal(this.router);
+      expect(this.routeData.router).to.equal(this.router);
     });
 
     it('should pass the original matched Route', function() {
-      expect(this.options.originalRoute).to.equal('*splat');
+      expect(this.routeData.originalRoute).to.equal('*splat');
     });
 
     it('should pass the current URI fragment', function() {
-      expect(this.options.uriFragment).to.equal('deeply/nested/splat?name=james');
+      expect(this.routeData.uriFragment).to.equal('deeply/nested/splat?name=james');
     });
 
     it('should pass a Regular expression as the route', function() {
-      expect(this.options.route).to.be.instanceOf(RegExp);
+      expect(this.routeData.route).to.be.instanceOf(RegExp);
     });
 
     it('should pass the parsed query params', function() {
-      expect(this.options.query).to.deep.equal({name: 'james'});
+      expect(this.routeData.query).to.deep.equal({name: 'james'});
     });
 
     it('should pass an empty object for the named params', function() {
-      expect(this.options.params).to.deep.equal({});
+      expect(this.routeData.params).to.deep.equal({});
     });
   });
 
@@ -519,7 +515,7 @@ describe('Base Router', function() {
     });
 
     it('should not include originalRoute in the options', function() {
-      expect(this.options).to.not.include.keys('originalRoute');
+      expect(this.routeData).to.not.include.keys('originalRoute');
     });
 
     it('should trigger onNavigate', function() {
@@ -527,27 +523,27 @@ describe('Base Router', function() {
     });
 
     it('should pass the object that was linked with the route', function() {
-      expect(this.options.linked).to.deep.equal(this.routeObj);
+      expect(this.routeData.linked).to.deep.equal(this.routeObj);
     });
 
     it('should pass the Router instance', function() {
-      expect(this.options.router).to.equal(this.router);
+      expect(this.routeData.router).to.equal(this.router);
     });
 
     it('should pass the current URI fragment', function() {
-      expect(this.options.uriFragment).to.equal('example');
+      expect(this.routeData.uriFragment).to.equal('example');
     });
 
     it('should pass a Regular expression as the route', function() {
-      expect(this.options.route).to.be.instanceOf(RegExp);
+      expect(this.routeData.route).to.be.instanceOf(RegExp);
     });
 
     it('should pass an empty object for query params', function() {
-      expect(this.options.query).to.deep.equal({});
+      expect(this.routeData.query).to.deep.equal({});
     });
 
     it('should pass empty named params', function() {
-      expect(this.options.params).to.deep.equal({});
+      expect(this.routeData.params).to.deep.equal({});
     });
   });
 
@@ -560,7 +556,7 @@ describe('Base Router', function() {
     });
 
     it('should not include originalRoute in the options', function() {
-      expect(this.options).to.not.include.keys('originalRoute');
+      expect(this.routeData).to.not.include.keys('originalRoute');
     });
 
     it('should trigger onNavigate', function() {
@@ -568,27 +564,27 @@ describe('Base Router', function() {
     });
 
     it('should pass the object that was linked with the route', function() {
-      expect(this.options.linked).to.deep.equal(this.routeObj);
+      expect(this.routeData.linked).to.deep.equal(this.routeObj);
     });
 
     it('should pass the Router instance', function() {
-      expect(this.options.router).to.equal(this.router);
+      expect(this.routeData.router).to.equal(this.router);
     });
 
     it('should pass the current URI fragment', function() {
-      expect(this.options.uriFragment).to.equal('example');
+      expect(this.routeData.uriFragment).to.equal('example');
     });
 
     it('should pass a Regular expression as the route', function() {
-      expect(this.options.route).to.be.instanceOf(RegExp);
+      expect(this.routeData.route).to.be.instanceOf(RegExp);
     });
 
     it('should pass an empty object for query params', function() {
-      expect(this.options.query).to.deep.equal({});
+      expect(this.routeData.query).to.deep.equal({});
     });
 
     it('should pass empty named params', function() {
-      expect(this.options.params).to.deep.equal({});
+      expect(this.routeData.params).to.deep.equal({});
     });
   });
 });

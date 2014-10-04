@@ -16,23 +16,23 @@ Backbone.BaseRouter = Backbone.Router.extend({
   history: Backbone.history,
 
   // The single point of entry. This is called whenever a
-  // route is matched. The options argument contains a large
+  // route is matched. The routeData argument contains a large
   // quantity of useful information.
-  onNavigate: function(options) {},
+  onNavigate: function(routeData) {},
 
   route: function(origRoute, linked) {
     var route = _.isRegExp(origRoute) ? origRoute : this._routeToRegExp(origRoute);
 
-    // Begin setting up our onNavOptions,
+    // Begin setting up our routeData,
     // based on what we already know.
-    var onNavOptions = {
+    var routeData = {
       route: route,
       router: this,
       linked: linked
     };
 
     if (!_.isRegExp(origRoute)) {
-      onNavOptions.originalRoute = origRoute;
+      routeData.originalRoute = origRoute;
     }
 
     // We register our callback with the , we gather all of our information 
@@ -42,12 +42,12 @@ Backbone.BaseRouter = Backbone.Router.extend({
       var queryString = routeParams.pop();
 
       // If the user is using history, then we'll get the options passed to route
-      if (navOptions) { onNavOptions.navOptions = navOptions; }
-      onNavOptions.query = router._getQueryParameters(queryString);
-      onNavOptions.params = router._getNamedParams(route, routeParams);
-      onNavOptions.uriFragment = fragment;
+      if (navOptions) { routeData.navOptions = navOptions; }
+      routeData.query = router._getQueryParameters(queryString);
+      routeData.params = router._getNamedParams(route, routeParams);
+      routeData.uriFragment = fragment;
 
-      router.onNavigate(onNavOptions);
+      router.onNavigate(routeData);
     });
 
     return this;

@@ -9,18 +9,18 @@ change. This library solves the second problem to make it easier for *you* to so
 first problem.
 
 Instead of requiring that you associate a callback with a route, this library
-lets you associate whatever you'd like with a route. It can be an object, a string, or
-even just a callback.
+lets you associate whatever you'd like with a route. It can be a callback if you want,
+but it can also be an object, or a string.
 
-Whenever a Route is matched, a single method on the Router is called. This method is passed
-you as much information about the Route – including the associated object – as possible. This single
-point-of-entry makes it remarkably easy to add new abstractions to your Router.
+Whenever a Route is matched, a single method on the Router is called. This method is passed a single
+argument, `routeData`, that contains as much about the matched route as possible. You'll get parsed
+query parameters, named fragment params, and the object you associated with the route. This single
+point-of-entry makes it remarkably easy to add new abstractions to the Router.
 
 ### What problems doesn't this library solve?
 
-This library is **not** an effort to rewrite Backbone.history. As such, some of the same quirks are carried
-over, too. For instance, the order that you specify your callbacks in *still* matters, as this behavior stems
-from `Backbone.history`.
+This library is **not** an effort to rewrite Backbone.history. As such, some of History's quirks are carried
+over, too. For instance, the order that you specify your callbacks in *still* matters, as this is how `Backbone.History` matches routes.
 
 ### Getting Started
 
@@ -33,7 +33,7 @@ alongside an existing Router.
 
 Backbone's Router is intimately tied to Backbone.History (more specifically, an instance
 of that Class called Backbone.history). There is no way to specify what version of history a regular Router
-uses, but you can with this one. Simply specify the `history` property on the Router.
+uses, but you can with this one. To do so, specify the `history` property on the Router.
 
 #### A Single Point of Entry
 
@@ -55,19 +55,20 @@ via Backbone.history.
 
 ```js
 // Create a new Base Router
-var baseRouter = new BaseRouter();
+var router = new BaseRouter();
 
-// Each time the user navigates a console message will be logged,
-// displaying all of the options passed to the callback.
-baseRouter.onNavigate = function(options) {
-  console.log('The user has navigated!', options);
+// Each time the user navigates to a matched route, a console message
+// logs all of the data passed to the callback.
+router.onNavigate = function(routeData) {
+  console.log('The user has navigated!', routeData);
 };
 ```
 
-In addition to being called everytime that the user navigates, which in itself is useful, the
-callback is passed a plethora of useful data related to the navigation action.
+In addition to being called everytime that the user navigates to a matched route, which in itself is useful, the
+callback is passed a plethora of useful data related to the navigation action. This information is contained
+in the `routeData` argument.
 
-### `options`
+### `routeData`
 
 #### `linked`
 
