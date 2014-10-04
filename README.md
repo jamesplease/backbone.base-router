@@ -10,7 +10,7 @@ first problem.
 
 Instead of requiring that you associate a callback with a route, this library
 lets you associate whatever you'd like with a route. It can be a callback if you want,
-but it can also be an object, or a string.
+but it can also be an object, or even a string.
 
 Whenever a Route is matched, a single method on the Router is called. This method is passed a single
 argument, `routeData`, that contains as much about the matched route as possible. Included this object are parsed
