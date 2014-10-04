@@ -52,20 +52,20 @@ module.exports = function(grunt) {
       }
     },
 
-    // jshint: {
-    //   baseRouter: {
-    //     options: {
-    //       jshintrc: '.jshintrc'
-    //     },
-    //     src: ['src/backbone.base-router.js']
-    //   },
-    //   tests: {
-    //     options: {
-    //       jshintrc: 'test/.jshintrc'
-    //     },
-    //     src: ['test/unit/*.js']
-    //   }
-    // },
+    jshint: {
+      baseRouter: {
+        options: {
+          jshintrc: '.jshintrc'
+        },
+        src: ['src/backbone.base-router.js']
+      },
+      tests: {
+        options: {
+          jshintrc: 'test/.jshintrc'
+        },
+        src: ['test/unit/*.js']
+      }
+    },
 
     mochaTest: {
       spec: {
@@ -84,7 +84,7 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('test', 'Test the library', [
-    // 'jshint',
+    'jshint',
     'mochaTest'
   ]);
 

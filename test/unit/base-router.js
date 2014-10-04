@@ -45,7 +45,7 @@ describe('Base Router', function() {
     });
 
     it('should pass a Regular expression as the route', function() {
-      expect(this.options.route).to.be.instanceof(RegExp);
+      expect(this.options.route).to.be.instanceOf(RegExp);
     });
 
     it('should pass an empty object for query params', function() {
@@ -90,7 +90,7 @@ describe('Base Router', function() {
     });
 
     it('should pass a Regular expression as the route', function() {
-      expect(this.options.route).to.be.instanceof(RegExp);
+      expect(this.options.route).to.be.instanceOf(RegExp);
     });
 
     it('should pass an empty object for query params', function() {
@@ -131,7 +131,7 @@ describe('Base Router', function() {
     });
 
     it('should pass a Regular expression as the route', function() {
-      expect(this.options.route).to.be.instanceof(RegExp);
+      expect(this.options.route).to.be.instanceOf(RegExp);
     });
 
     it('should pass an empty object for query params', function() {
@@ -172,7 +172,7 @@ describe('Base Router', function() {
     });
 
     it('should pass a Regular expression as the route', function() {
-      expect(this.options.route).to.be.instanceof(RegExp);
+      expect(this.options.route).to.be.instanceOf(RegExp);
     });
 
     it('should pass an empty object for query params', function() {
@@ -213,7 +213,7 @@ describe('Base Router', function() {
     });
 
     it('should pass a Regular expression as the route', function() {
-      expect(this.options.route).to.be.instanceof(RegExp);
+      expect(this.options.route).to.be.instanceOf(RegExp);
     });
 
     it('should pass the parsed query params', function() {
@@ -254,7 +254,7 @@ describe('Base Router', function() {
     });
 
     it('should pass a Regular expression as the route', function() {
-      expect(this.options.route).to.be.instanceof(RegExp);
+      expect(this.options.route).to.be.instanceOf(RegExp);
     });
 
     it('should pass the parsed query params', function() {
@@ -295,7 +295,7 @@ describe('Base Router', function() {
     });
 
     it('should pass a Regular expression as the route', function() {
-      expect(this.options.route).to.be.instanceof(RegExp);
+      expect(this.options.route).to.be.instanceOf(RegExp);
     });
 
     it('should pass the parsed query params, not parsing the array-like syntax', function() {
@@ -336,7 +336,7 @@ describe('Base Router', function() {
     });
 
     it('should pass a Regular expression as the route', function() {
-      expect(this.options.route).to.be.instanceof(RegExp);
+      expect(this.options.route).to.be.instanceOf(RegExp);
     });
 
     it('should pass the parsed query params, not parsing the array-like syntax', function() {
@@ -377,7 +377,7 @@ describe('Base Router', function() {
     });
 
     it('should pass a Regular expression as the route', function() {
-      expect(this.options.route).to.be.instanceof(RegExp);
+      expect(this.options.route).to.be.instanceOf(RegExp);
     });
 
     it('should pass an empty object for query params', function() {
@@ -418,7 +418,7 @@ describe('Base Router', function() {
     });
 
     it('should pass a Regular expression as the route', function() {
-      expect(this.options.route).to.be.instanceof(RegExp);
+      expect(this.options.route).to.be.instanceOf(RegExp);
     });
 
     it('should pass an empty object for query params', function() {
@@ -458,7 +458,7 @@ describe('Base Router', function() {
     });
 
     it('should pass a Regular expression as the route', function() {
-      expect(this.options.route).to.be.instanceof(RegExp);
+      expect(this.options.route).to.be.instanceOf(RegExp);
     });
 
     it('should pass the parsed query params', function() {
@@ -498,7 +498,7 @@ describe('Base Router', function() {
     });
 
     it('should pass a Regular expression as the route', function() {
-      expect(this.options.route).to.be.instanceof(RegExp);
+      expect(this.options.route).to.be.instanceOf(RegExp);
     });
 
     it('should pass the parsed query params', function() {
@@ -539,7 +539,7 @@ describe('Base Router', function() {
     });
 
     it('should pass a Regular expression as the route', function() {
-      expect(this.options.route).to.be.instanceof(RegExp);
+      expect(this.options.route).to.be.instanceOf(RegExp);
     });
 
     it('should pass an empty object for query params', function() {
@@ -580,7 +580,7 @@ describe('Base Router', function() {
     });
 
     it('should pass a Regular expression as the route', function() {
-      expect(this.options.route).to.be.instanceof(RegExp);
+      expect(this.options.route).to.be.instanceOf(RegExp);
     });
 
     it('should pass an empty object for query params', function() {
