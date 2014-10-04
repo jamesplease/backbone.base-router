@@ -132,3 +132,7 @@ called `navOptions`.
 var BaseHistory = require('BaseHistory');
 myRoute.history = new baseHistory();
 ```
+
+## Example Usage
+
+See the `examples/` directory. There are READMEs for each example.
