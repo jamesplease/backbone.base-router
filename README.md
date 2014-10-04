@@ -22,6 +22,17 @@ single point-of-entry, combined with all of this data, makes it remarkably easy 
 This library is not an effort to rewrite Backbone.history. As such, some of History's quirks are carried
 over, too. For instance, the order that you specify your callbacks in *still* matters, as this is how `Backbone.History` matches routes.
 
+- [Getting Started](#getting-started)
+  - [Backwards Compatibility](#backwards-compatibility)
+  - [History](#history)
+  - [A Single Point of Entry](#a-single-point-of-entry)
+- [API](#api)
+  - [history](#history)
+  - [onNavigate](#onnavigate-routedata-)
+- [Removed Features](#removed-features)
+- [Accessing the options passed to `route`](#accessing-the-options-passed-to-route)
+- [Example Usage](#example-usage)
+
 ### Getting Started
 
 #### Backwards Compatibility
@@ -135,4 +146,4 @@ myRoute.history = new baseHistory();
 
 ## Example Usage
 
-See the `examples/` directory. There are READMEs for each example.
+See the [`examples/`](https://github.com/jmeas/backbone.base-router/tree/updates/examples) directory. There are READMEs for each example.
