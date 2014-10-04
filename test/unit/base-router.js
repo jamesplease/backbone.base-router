@@ -8,6 +8,20 @@ describe('Base Router', function() {
     this.sinon.spy(this.router, 'onNavigate');
   });
 
+  describe('when specifying a different instance of history', function() {
+    beforeEach(function() {
+      this.newHistory = { route: this.sinon.stub() };
+      this.router.history = this.newHistory;
+      this.sinon.spy(Backbone.history, 'route');
+      this.router.route('what', true);
+    });
+
+    it('should route on the specified history, not Backbone.history', function() {
+      expect(Backbone.history.route).to.not.have.been.called;
+      expect(this.newHistory.route).to.have.been.calledOnce;
+    }); 
+  });
+
   describe('when routing to a matched route with pushState', function() {
     beforeEach(function() {
       Backbone.history.location = new this.Location('http://example.com/example');
