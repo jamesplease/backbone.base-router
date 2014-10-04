@@ -13,27 +13,29 @@ lets you associate whatever you'd like with a route. It can be a callback if you
 but it can also be an object, or a string.
 
 Whenever a Route is matched, a single method on the Router is called. This method is passed a single
-argument, `routeData`, that contains as much about the matched route as possible. You'll get parsed
-query parameters, named fragment params, and the object you associated with the route. This single
-point-of-entry makes it remarkably easy to add new abstractions to the Router.
+argument, `routeData`, that contains as much about the matched route as possible. In this object are parsed
+query parameters, named fragment params, and the object you associated with the route, among other useful
+data. This single point-of-entry, combined with all of this data, makes it remarkably easy to add new
+abstractions to the Router.
 
-### What problems doesn't this library solve?
+### What problems **doesn't** this library solve?
 
-This library is **not** an effort to rewrite Backbone.history. As such, some of History's quirks are carried
+This library is not an effort to rewrite Backbone.history. As such, some of History's quirks are carried
 over, too. For instance, the order that you specify your callbacks in *still* matters, as this is how `Backbone.History` matches routes.
 
 ### Getting Started
 
 #### Backwards Compatibility
 
-This library is backwards compatible with any existing Backbone Application. It can even run concurrently
+This library is backwards compatible with any existing Backbone application. It can even run concurrently
 alongside an existing Router.
 
 #### History
 
 Backbone's Router is intimately tied to Backbone.History (more specifically, an instance
-of that Class called Backbone.history). There is no way to specify what version of history a regular Router
-uses, but you can with this one. To do so, specify the `history` property on the Router.
+of that Class called Backbone.history). With a regular Router you can't specify what instance
+of history that you're using, but you can with this one. To use a different instance of History, specify the
+`history` property on the Router.
 
 #### A Single Point of Entry
 
@@ -48,7 +50,7 @@ where you build your abstractions from.
 
 The instance of `history` to use in conjunction with this Router.
 
-### `onNavigate`
+### `onNavigate( routeData )`
 
 The single point of entry is the `onNavigate` method. This method is called each time the user navigates
 via Backbone.history.
@@ -68,36 +70,36 @@ In addition to being called everytime that the user navigates to a matched route
 callback is passed a plethora of useful data related to the navigation action. This information is contained
 in the `routeData` argument.
 
-### `routeData`
+#### `routeData`
 
-#### `linked`
+##### `linked`
 
 The object that was associated with this route. In a traditional Backbone router, this is always a callback that
 is executed. In the BaseRouter, this can be anything, and no assumptions are made about what you should do with it.
 
-#### `route`
+##### `route`
 
 The regular expression that matched the URI fragment.
 
-#### `originalRoute`
+##### `originalRoute`
 
 If the route was registered as a string, and not a regular expression, then this will
 be that original string. Otherwise, it is undefined.
 
-#### `params`
+##### `params`
 
 An object which has keys that are the named parameters from the Route, and corresponding values
 from the URL.
 
-#### `query`
+##### `query`
 
 An object representation of the query string in the URI fragment.
 
-#### `router`
+##### `router`
 
 The router instance that this route was registered on.
 
-#### `uriFragment`
+##### `uriFragment`
 
 The URI fragment that was matched.
 
@@ -105,9 +107,9 @@ The URI fragment that was matched.
 
 Backbone.BaseRouter does more for you by doing less. The following features were removed from the router.
 
-- A callback, if specified, will no longer ever be executed
-- Related to the above; the `trigger` option no longer exists
-- No `route` events are not fired
+- A callback, if specified, is not executed
+- Related to the above; the `trigger` option to the `navigate` method no longer exists
+- No routing-related events are fired
 
 The point of removing these features is that it gives you complete control over the Routing
 mechanism. It's simple to add them back in. Or you can change them to be exactly how you
@@ -123,5 +125,5 @@ myRouter.route('some/path', {myOption: true});
 
 This Router – and all Backbone.Routers – do not get these options back. They're sent off to History and
 not returned. Because this library is *just* a Router, it doesn't let you access those options. However, by
-using this library in conjunction with Backbone.BaseHistory you will receive an extra parameter in your
-`onNavigate` callback, `navOptions`. These are those options.
+using this library in conjunction with [Backbone.BaseHistory](https://github.com/jmeas/backbone.base-history)
+you will receive an extra parameter in your `onNavigate` callback, `navOptions`, which are those options.
