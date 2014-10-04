@@ -12,12 +12,12 @@ var escapeRegExp  = /[\-{}\[\]+?.,\\\^$|#\s]/g;
 
 Backbone.BaseRouter = Backbone.Router.extend({
 
-  // The instance of history that this Router 
+  // The instance of history that this Router uses
   history: Backbone.history,
 
   // The single point of entry. This is called whenever a
-  // route is matched. The routeData argument contains a large
-  // quantity of useful information.
+  // route is matched. The routeData argument contains lots of
+  // useful information.
   onNavigate: function(routeData) {},
 
   route: function(origRoute, linked) {
@@ -31,17 +31,16 @@ Backbone.BaseRouter = Backbone.Router.extend({
       linked: linked
     };
 
-    if (!_.isRegExp(origRoute)) {
-      routeData.originalRoute = origRoute;
-    }
+    // Only attach the originalRoute to routeData if it isn't a RegExp.
+    if (!_.isRegExp(origRoute)) { routeData.originalRoute = origRoute; }
 
-    // We register our callback with the , we gather all of our information 
+    // Register a callback with history
     var router = this;
     this.history.route(route, function(fragment, navOptions) {
       var routeParams = router._extractParameters(route, fragment);
       var queryString = routeParams.pop();
 
-      // If the user is using history, then we'll get the options passed to route
+      // If the user is using baseHistory, then we'll get the navOptions back from BB.History
       if (navOptions) { routeData.navOptions = navOptions; }
       routeData.query = router._getQueryParameters(queryString);
       routeData.params = router._getNamedParams(route, routeParams);
