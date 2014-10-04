@@ -58,7 +58,7 @@ where you build your abstractions from.
 
 ### `history`
 
-The instance of `history` to use in conjunction with this Router.
+The instance of `history` to use in conjunction with this Router. Defaults to `Backbone.history`.
 
 ### `onNavigate( routeData )`
 
