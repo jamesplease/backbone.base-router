@@ -2,6 +2,8 @@
 // Backbone.BaseRouter
 //
 
+'use strict';
+
 // Copied over from Backbone, because it doesn't expose them.
 var optionalParam = /\((.*?)\)/g;
 var namedParam    = /(\(\?)?:\w+/g;
@@ -40,7 +42,7 @@ Backbone.BaseRouter = Backbone.Router.extend({
       var queryString = routeParams.pop();
 
       // If the user is using history, then we'll get the options passed to route
-      if (navOptions) { onNavOptions.navOptions = navOptions }
+      if (navOptions) { onNavOptions.navOptions = navOptions; }
       onNavOptions.query = router._getQueryParameters(queryString);
       onNavOptions.params = router._getNamedParams(route, routeParams);
       onNavOptions.uriFragment = fragment;
@@ -54,7 +56,6 @@ Backbone.BaseRouter = Backbone.Router.extend({
   _routeToRegExp: function(route) {
     this.routeParams = this.routeParams || {};
 
-    var self = this;
     var namedParams = [];
     var newRoute = route.replace(escapeRegExp, '\\$&')
       .replace(optionalParam, '(?:$1)?')
@@ -76,7 +77,7 @@ Backbone.BaseRouter = Backbone.Router.extend({
     var match,
       pl     = /\+/g,  // Regex for replacing addition symbol with a space
       search = /([^&=]+)=?([^&]*)/g,
-      decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+      decode = function (s) { return decodeURIComponent(s.replace(pl, ' ')); },
       query  = queryString;
 
     var urlParams = {};
