@@ -25,7 +25,7 @@ var Router = Backbone.BaseRouter.extend({
         return this.model.fetch();
       },
 
-      show: function(e) {
+      show: function() {
         console.log('Data fetched. Showing the view.');
       }
     }
