@@ -23,42 +23,39 @@ This library is not an effort to rewrite Backbone.history. As such, some of Hist
 over, too. For instance, the order that you specify your callbacks in *still* matters, as this is how `Backbone.History` matches routes.
 
 - [Getting Started](#getting-started)
-  - [Backwards Compatibility](#backwards-compatibility)
-  - [History](#history)
-  - [A Single Point of Entry](#a-single-point-of-entry)
+  - [The Single Point of Entry](#the-single-point-of-entry)
+  - [Removed Features](#removed-features)
+  - [Example Usage](#example-usage)
 - [API](#api)
   - [history](#history)
   - [onNavigate](#onnavigate-routedata-)
-- [Removed Features](#removed-features)
-- [Accessing the options passed to `route`](#accessing-the-options-passed-to-route)
-- [Example Usage](#example-usage)
+
 
 ### Getting Started
 
-#### Backwards Compatibility
-
-This library is backwards compatible with any existing Backbone application. It can even run concurrently
-alongside an existing Router.
-
-#### History
-
-Backbone's Router is intimately tied to Backbone.History (more specifically, an instance
-of that Class called Backbone.history). With a regular Router you can't specify what instance
-of history that you're using, but you can with this one. To use a different instance of History, specify the
-`history` property on the Router.
-
-#### A Single Point of Entry
+#### The Single Point of Entry
 
 The API for the Base Router is simple: there's a single callback that gets called when a Route is navigated
 to. This callback is a plethora of information you might need, such as parsed query
 parameters and whatever object was associated with the callback. This is the location
 where you build your abstractions from.
 
+#### Removed features
+
+Backbone.BaseRouter does more for you by doing less. The following features were removed from the router.
+
+- A callback, if specified, is not automatically executed
+- No routing-related events are fired
+
+The point of removing these features is that it gives you complete control over the Routing
+mechanism. It's simple to add them back in. Or you can change them to be exactly how you
+want. Or just leave them out. It's entirely up to you.
+
+#### Example Usage
+
+See the [`examples/`](https://github.com/jmeas/backbone.base-router/tree/updates/examples) directory. There are READMEs for each example.
+
 ## API
-
-### `history`
-
-The instance of `history` to use in conjunction with this Router. Defaults to `Backbone.history`.
 
 ### `onNavigate( routeData )`
 
@@ -112,38 +109,3 @@ The router instance that this route was registered on.
 ##### `uriFragment`
 
 The URI fragment that was matched.
-
-### Removed features
-
-Backbone.BaseRouter does more for you by doing less. The following features were removed from the router.
-
-- A callback, if specified, is not executed
-- Related to the above; the `trigger` option to the `navigate` method no longer exists
-- No routing-related events are fired
-
-The point of removing these features is that it gives you complete control over the Routing
-mechanism. It's simple to add them back in. Or you can change them to be exactly how you
-want. Or just leave them out. It's entirely up to you.
-
-### Accessing the options passed to `route`
-
-As you might already know, you can pass options when you call the `route` method.
-
-```js
-myRouter.navigate('some/path', {myOption: true});
-```
-
-Backbone Routers do not get these options back. They're sent off to History, which does not
-return them. Because this library is *just* a Router, it doesn't let you access those options. However, if you want
-these options you can use [Backbone.BaseHistory](https://github.com/jmeas/backbone.base-history) in conjunction
-with this library. If you use that library you will receive those options in your `routeData` as a property
-called `navOptions`.
-
-```js
-var BaseHistory = require('BaseHistory');
-myRoute.history = new baseHistory();
-```
-
-## Example Usage
-
-See the [`examples/`](https://github.com/jmeas/backbone.base-router/tree/updates/examples) directory. There are READMEs for each example.
