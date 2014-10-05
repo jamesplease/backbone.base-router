@@ -12,9 +12,6 @@ var escapeRegExp  = /[\-{}\[\]+?.,\\\^$|#\s]/g;
 
 Backbone.BaseRouter = Backbone.Router.extend({
 
-  // The instance of history that this Router uses
-  history: Backbone.history,
-
   // The single point of entry. This is called whenever a
   // route is matched. The routeData argument contains lots of
   // useful information.
@@ -36,7 +33,7 @@ Backbone.BaseRouter = Backbone.Router.extend({
 
     // Register a callback with history
     var router = this;
-    this.history.route(route, function(fragment, navOptions) {
+    Backbone.history.route(route, function(fragment, navOptions) {
       var routeParams = router._extractParameters(route, fragment);
       var queryString = routeParams.pop();
 
