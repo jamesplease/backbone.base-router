@@ -5,10 +5,7 @@
 'use strict';
 
 // Copied over from Backbone, because it doesn't expose them.
-var optionalParam = /\((.*?)\)/g;
 var namedParam    = /(\(\?)?:\w+/g;
-var splatParam    = /\*\w+/g;
-var escapeRegExp  = /[\-{}\[\]+?.,\\\^$|#\s]/g;
 
 Backbone.BaseRouter = Backbone.Router.extend({
 
@@ -17,8 +14,20 @@ Backbone.BaseRouter = Backbone.Router.extend({
   // useful information.
   onNavigate: function(routeData) {},
 
+  routeParams: {},
+
   route: function(origRoute, linked) {
-    var route = _.isRegExp(origRoute) ? origRoute : this._routeToRegExp(origRoute);
+    var route, routeStr;
+
+    if (_.isRegExp(origRoute)) {
+      route = origRoute;
+      routeStr = origRoute.toString();
+    } else {
+      route = this._routeToRegExp(origRoute);
+      routeStr = origRoute;
+    }
+
+    this.routeParams[origRoute] = this._extractRouteParams(routeStr);
 
     // Begin setting up our routeData,
     // based on what we already know.
@@ -29,7 +38,9 @@ Backbone.BaseRouter = Backbone.Router.extend({
     };
 
     // Only attach the originalRoute to routeData if it isn't a RegExp.
-    if (!_.isRegExp(origRoute)) { routeData.originalRoute = origRoute; }
+    if (!_.isRegExp(origRoute)) {
+      routeData.originalRoute = origRoute;
+    }
 
     // Register a callback with history
     var router = this;
@@ -40,7 +51,7 @@ Backbone.BaseRouter = Backbone.Router.extend({
       // If the user is using baseHistory, then we'll get the navOptions back from BB.History
       if (navOptions) { routeData.navOptions = navOptions; }
       routeData.query = router._getQueryParameters(queryString);
-      routeData.params = router._getNamedParams(route, routeParams);
+      routeData.params = router._getNamedParams(routeStr, routeParams);
       routeData.uriFragment = fragment;
 
       router.onNavigate(routeData);
@@ -49,20 +60,14 @@ Backbone.BaseRouter = Backbone.Router.extend({
     return this;
   },
 
-  _routeToRegExp: function(route) {
-    this.routeParams = this.routeParams || {};
-
+  _extractRouteParams: function(route) {
     var namedParams = [];
-    var newRoute = route.replace(escapeRegExp, '\\$&')
-      .replace(optionalParam, '(?:$1)?')
-      .replace(namedParam, function(match, optional) {
-        namedParams.push(match.substr(1));
-        return optional ? match : '([^/?]+)';
-      })
-      .replace(splatParam, '([^?]*?)');
-    var regexStr = '^' + newRoute + '(?:\\?([\\s\\S]*))?$';
-    this.routeParams[regexStr] = namedParams;
-    return new RegExp(regexStr);
+
+    route.replace(namedParam, function(match, optional) {
+      namedParams.push(match.substr(1));
+    });
+
+    return namedParams;
   },
 
   // Decodes the Url query string parameters & and returns them
@@ -85,14 +90,11 @@ Backbone.BaseRouter = Backbone.Router.extend({
 
   // Returns the named parameters of the route
   _getNamedParams: function(route, routeParams) {
-    if (routeParams.length === 0) { return {}; }
-    var routeString = route.toString();
-    routeString = routeString.substr(1, routeString.length - 2);
-    var routeArr = this.routeParams[routeString];
-    var paramObj = {};
-    _.each(routeArr, function(arrVal, i) {
-      paramObj[arrVal] = routeParams[i];
-    });
-    return paramObj;
+    if (!routeParams.length) { return {}; }
+
+    var routeKeys = this.routeParams[route];
+    var routeValues = routeParams.slice(0, routeKeys.length);
+
+    return _.object(_.zip(routeKeys, routeValues));
   }
 });
