@@ -69,18 +69,25 @@ Backbone.BaseRouter = Backbone.Router.extend({
   // as an object. Supports empty parameters, but not array-like
   // parameters (which aren't in the URI specification)
   _getQueryParameters: function(queryString) {
-    if (!queryString) { return {}; }
-    var match,
-      pl     = /\+/g,  // Regex for replacing addition symbol with a space
-      search = /([^&=]+)=?([^&]*)/g,
-      decode = function (s) { return decodeURIComponent(s.replace(pl, ' ')); },
-      query  = queryString;
 
-    var urlParams = {};
-    while (match = search.exec(query)) {
-       urlParams[decode(match[1])] = decode(match[2]);
+    if (!queryString) {
+      return {};
     }
+
+    var match;
+    var search = /([^&=]+)=?([^&]*)/g;
+    var urlParams = {};
+
+    while (match = search.exec(queryString)) {
+       urlParams[this._decodeParams(match[1])] = this._decodeParams(match[2]);
+    }
+
     return urlParams;
+  },
+
+  _decodeParams: function (queryString) {
+    var pl = /\+/g;  // Regex for replacing addition symbol with a space
+    return decodeURIComponent(queryString.replace(pl, ' '));
   },
 
   // Returns the named parameters of the route
