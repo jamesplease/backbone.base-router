@@ -2,8 +2,6 @@
 // Backbone.BaseRouter
 //
 
-'use strict';
-
 // Copied over from Backbone, because it doesn't expose them.
 var namedParam    = /(\(\?)?:\w+/g;
 
