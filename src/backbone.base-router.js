@@ -8,13 +8,15 @@
 var namedParam    = /(\(\?)?:\w+/g;
 
 Backbone.BaseRouter = Backbone.Router.extend({
+  constructor: function() {
+    this.routeParams = {};
+    Backbone.Router.constructor.apply(this, arguments);
+  },
 
   // The single point of entry. This is called whenever a
   // route is matched. The routeData argument contains lots of
   // useful information.
   onNavigate: function(routeData) {},
-
-  routeParams: {},
 
   route: function(origRoute, linked) {
     var route, routeStr;
