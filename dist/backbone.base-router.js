@@ -1,4 +1,4 @@
-// Backbone.BaseRouter v0.3.0
+// Backbone.BaseRouter v0.4.0
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     define(['backbone', 'underscore'], function(Backbone, _) {
@@ -20,15 +20,14 @@
   // Backbone.BaseRouter
   //
   
-  'use strict';
-  
   // Copied over from Backbone, because it doesn't expose them.
-  var optionalParam = /\((.*?)\)/g;
-  var namedParam    = /(\(\?)?:\w+/g;
-  var splatParam    = /\*\w+/g;
-  var escapeRegExp  = /[\-{}\[\]+?.,\\\^$|#\s]/g;
+  var namedParam = /(\(\?)?:\w+/g;
   
   Backbone.BaseRouter = Backbone.Router.extend({
+    constructor: function() {
+      this.routeParams = {};
+      Backbone.Router.constructor.apply(this, arguments);
+    },
   
     // The single point of entry. This is called whenever a
     // route is matched. The routeData argument contains lots of
@@ -36,7 +35,17 @@
     onNavigate: function(routeData) {},
   
     route: function(origRoute, linked) {
-      var route = _.isRegExp(origRoute) ? origRoute : this._routeToRegExp(origRoute);
+      var route, routeStr;
+  
+      if (_.isRegExp(origRoute)) {
+        route = origRoute;
+        routeStr = origRoute.toString();
+      } else {
+        route = this._routeToRegExp(origRoute);
+        routeStr = origRoute;
+      }
+  
+      this.routeParams[origRoute] = this._extractRouteParams(routeStr);
   
       // Begin setting up our routeData,
       // based on what we already know.
@@ -47,7 +56,9 @@
       };
   
       // Only attach the originalRoute to routeData if it isn't a RegExp.
-      if (!_.isRegExp(origRoute)) { routeData.originalRoute = origRoute; }
+      if (!_.isRegExp(origRoute)) {
+        routeData.originalRoute = origRoute;
+      }
   
       // Register a callback with history
       var router = this;
@@ -58,7 +69,7 @@
         // If the user is using baseHistory, then we'll get the navOptions back from BB.History
         if (navOptions) { routeData.navOptions = navOptions; }
         routeData.query = router._getQueryParameters(queryString);
-        routeData.params = router._getNamedParams(route, routeParams);
+        routeData.params = router._getNamedParams(routeStr, routeParams);
         routeData.uriFragment = fragment;
   
         router.onNavigate(routeData);
@@ -67,20 +78,14 @@
       return this;
     },
   
-    _routeToRegExp: function(route) {
-      this.routeParams = this.routeParams || {};
-  
+    _extractRouteParams: function(route) {
       var namedParams = [];
-      var newRoute = route.replace(escapeRegExp, '\\$&')
-        .replace(optionalParam, '(?:$1)?')
-        .replace(namedParam, function(match, optional) {
-          namedParams.push(match.substr(1));
-          return optional ? match : '([^/?]+)';
-        })
-        .replace(splatParam, '([^?]*?)');
-      var regexStr = '^' + newRoute + '(?:\\?([\\s\\S]*))?$';
-      this.routeParams[regexStr] = namedParams;
-      return new RegExp(regexStr);
+  
+      route.replace(namedParam, function(match, optional) {
+        namedParams.push(match.substr(1));
+      });
+  
+      return namedParams;
     },
   
     // Decodes the Url query string parameters & and returns them
@@ -88,30 +93,31 @@
     // parameters (which aren't in the URI specification)
     _getQueryParameters: function(queryString) {
       if (!queryString) { return {}; }
-      var match,
-        pl     = /\+/g,  // Regex for replacing addition symbol with a space
-        search = /([^&=]+)=?([^&]*)/g,
-        decode = function (s) { return decodeURIComponent(s.replace(pl, ' ')); },
-        query  = queryString;
   
+      var match;
+      var search = /([^&=]+)=?([^&]*)/g;
       var urlParams = {};
-      while (match = search.exec(query)) {
-         urlParams[decode(match[1])] = decode(match[2]);
+  
+      while (match = search.exec(queryString)) {
+         urlParams[this._decodeParams(match[1])] = this._decodeParams(match[2]);
       }
+  
       return urlParams;
+    },
+  
+    _decodeParams: function (queryString) {
+      // Replace addition symbol with a space
+      return decodeURIComponent(queryString.replace(/\+/g, ' '));
     },
   
     // Returns the named parameters of the route
     _getNamedParams: function(route, routeParams) {
-      if (routeParams.length === 0) { return {}; }
-      var routeString = route.toString();
-      routeString = routeString.substr(1, routeString.length - 2);
-      var routeArr = this.routeParams[routeString];
-      var paramObj = {};
-      _.each(routeArr, function(arrVal, i) {
-        paramObj[arrVal] = routeParams[i];
-      });
-      return paramObj;
+      if (!routeParams.length) { return {}; }
+  
+      var routeKeys = this.routeParams[route];
+      var routeValues = routeParams.slice(0, routeKeys.length);
+  
+      return _.object(_.zip(routeKeys, routeValues));
     }
   });
   
