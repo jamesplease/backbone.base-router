@@ -3,7 +3,7 @@
 //
 
 // Copied over from Backbone, because it doesn't expose them.
-var namedParam    = /(\(\?)?:\w+/g;
+var namedParam = /(\(\?)?:\w+/g;
 
 Backbone.BaseRouter = Backbone.Router.extend({
   constructor: function() {
@@ -74,10 +74,7 @@ Backbone.BaseRouter = Backbone.Router.extend({
   // as an object. Supports empty parameters, but not array-like
   // parameters (which aren't in the URI specification)
   _getQueryParameters: function(queryString) {
-
-    if (!queryString) {
-      return {};
-    }
+    if (!queryString) { return {}; }
 
     var match;
     var search = /([^&=]+)=?([^&]*)/g;
@@ -91,8 +88,8 @@ Backbone.BaseRouter = Backbone.Router.extend({
   },
 
   _decodeParams: function (queryString) {
-    var pl = /\+/g;  // Regex for replacing addition symbol with a space
-    return decodeURIComponent(queryString.replace(pl, ' '));
+    // Replace addition symbol with a space
+    return decodeURIComponent(queryString.replace(/\+/g, ' '));
   },
 
   // Returns the named parameters of the route
