@@ -8,7 +8,7 @@ var namedParam = /(\(\?)?:\w+/g;
 Backbone.BaseRouter = Backbone.Router.extend({
   constructor: function() {
     this.routeParams = {};
-    Backbone.Router.constructor.apply(this, arguments);
+    Backbone.Router.prototype.constructor.apply(this, arguments);
   },
 
   // The single point of entry. This is called whenever a
