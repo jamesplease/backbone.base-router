@@ -1,6 +1,6 @@
 {
   "name": "backbone.base-router",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "A better starting point for a new Backbone Router.",
   "main": "dist/backbone.base-router.js",
   "directories": {

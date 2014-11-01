@@ -1,4 +1,4 @@
-// Backbone.BaseRouter v0.4.0
+// Backbone.BaseRouter v0.4.1
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     define(['backbone', 'underscore'], function(Backbone, _) {
@@ -26,7 +26,7 @@
   Backbone.BaseRouter = Backbone.Router.extend({
     constructor: function() {
       this.routeParams = {};
-      Backbone.Router.constructor.apply(this, arguments);
+      Backbone.Router.prototype.constructor.apply(this, arguments);
     },
   
     // The single point of entry. This is called whenever a
