@@ -53,7 +53,7 @@ want. Or just leave them out. It's entirely up to you.
 
 #### Example Usage
 
-See the [`examples/`](https://github.com/jmeas/backbone.base-router/tree/updates/examples) directory. There are READMEs for each example.
+See the [`examples/`](https://github.com/jmeas/backbone.base-router/tree/master/examples) directory. There are READMEs for each example.
 
 ## API
 
