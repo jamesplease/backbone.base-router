@@ -21,7 +21,7 @@ Backbone.BaseRouter = Backbone.Router.extend({
 
     if (_.isRegExp(origRoute)) {
       route = origRoute;
-      routeStr = origRoute.toString();
+      routeStr = '' + origRoute;
     } else {
       route = this._routeToRegExp(origRoute);
       routeStr = origRoute;
