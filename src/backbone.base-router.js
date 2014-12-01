@@ -21,7 +21,7 @@ Backbone.BaseRouter = Backbone.Router.extend({
 
     if (_.isRegExp(origRoute)) {
       route = origRoute;
-      routeStr = origRoute.toString();
+      routeStr = '' + origRoute;
     } else {
       route = this._routeToRegExp(origRoute);
       routeStr = origRoute;
@@ -68,6 +68,19 @@ Backbone.BaseRouter = Backbone.Router.extend({
     });
 
     return namedParams;
+  },
+
+  // Port from https://github.com/jashkenas/backbone/blob/1.1.2/backbone.js#L1298-1308
+  // Given a route, and a URL fragment that it matches, return the array of
+  // extracted decoded parameters. Empty or unmatched parameters will be
+  // treated as `null` to normalize cross-browser behavior.
+  _extractParameters: function(route, fragment) {
+    var params = route.exec(fragment).slice(1);
+    return _.map(params, function(param, i) {
+      // Don't decode the search params.
+      if (i === params.length - 1) { return param || null; }
+      return param ? decodeURIComponent(param) : null;
+    });
   },
 
   // Decodes the Url query string parameters & and returns them
