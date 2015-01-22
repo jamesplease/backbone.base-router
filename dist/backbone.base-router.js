@@ -1,4 +1,4 @@
-// Backbone.BaseRouter v0.4.1
+// Backbone.BaseRouter v0.5.0
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     define(['backbone', 'underscore'], function(Backbone, _) {
@@ -39,7 +39,7 @@
   
       if (_.isRegExp(origRoute)) {
         route = origRoute;
-        routeStr = origRoute.toString();
+        routeStr = '' + origRoute;
       } else {
         route = this._routeToRegExp(origRoute);
         routeStr = origRoute;
