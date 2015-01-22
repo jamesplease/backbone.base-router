@@ -2,8 +2,12 @@
 // Backbone.BaseRouter
 //
 
-// Copied over from Backbone, because it doesn't expose them.
-var namedParam = /(\(\?)?:\w+/g;
+// This is copied over from Backbone, because it doesn't expose it
+var NAMED_PARAM = /(\(\?)?:\w+/g;
+// Find query parameters
+var QUERY_PARAMS = /([^&=]+)=?([^&]*)/g;
+// Find plus symbols
+var PLUS_SYMBOL = /\+/g;
 
 Backbone.BaseRouter = Backbone.Router.extend({
   constructor: function() {
@@ -63,7 +67,7 @@ Backbone.BaseRouter = Backbone.Router.extend({
   _extractRouteParams: function(route) {
     var namedParams = [];
 
-    route.replace(namedParam, function(match, optional) {
+    route.replace(NAMED_PARAM, function(match, optional) {
       namedParams.push(match.substr(1));
     });
 
@@ -76,20 +80,16 @@ Backbone.BaseRouter = Backbone.Router.extend({
   _getQueryParameters: function(queryString) {
     if (!queryString) { return {}; }
 
-    var match;
-    var search = /([^&=]+)=?([^&]*)/g;
-    var urlParams = {};
-
-    while (match = search.exec(queryString)) {
+    var match, urlParams = {};
+    while (match = QUERY_PARAMS.exec(queryString)) {
        urlParams[this._decodeParams(match[1])] = this._decodeParams(match[2]);
     }
-
     return urlParams;
   },
 
   _decodeParams: function (queryString) {
     // Replace addition symbol with a space
-    return decodeURIComponent(queryString.replace(/\+/g, ' '));
+    return decodeURIComponent(queryString.replace(PLUS_SYMBOL, ' '));
   },
 
   // Returns the named parameters of the route
