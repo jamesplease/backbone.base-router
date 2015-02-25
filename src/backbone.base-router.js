@@ -4,8 +4,6 @@
 
 // This is copied over from Backbone, because it doesn't expose it
 var NAMED_PARAM = /(\(\?)?:\w+/g;
-// Find query parameters
-var QUERY_PARAMS = /([^&=]+)=?([^&]*)/g;
 // Find plus symbols
 var PLUS_SYMBOL = /\+/g;
 
@@ -80,16 +78,33 @@ Backbone.BaseRouter = Backbone.Router.extend({
   _getQueryParameters: function(queryString) {
     if (!queryString) { return {}; }
 
-    var match, urlParams = {};
-    while (match = QUERY_PARAMS.exec(queryString)) {
-       urlParams[this._decodeParams(match[1])] = this._decodeParams(match[2]);
-    }
-    return urlParams;
-  },
+    return _.reduce(queryString.split('&'), function(memo, param) {
+      var parts = param.replace(PLUS_SYMBOL, ' ').split('=');
+      var key = parts[0];
+      var val = parts[1];
 
-  _decodeParams: function (queryString) {
-    // Replace addition symbol with a space
-    return decodeURIComponent(queryString.replace(PLUS_SYMBOL, ' '));
+      key = decodeURIComponent(key);
+      val = val === undefined ? null : decodeURIComponent(val);
+
+      // If we don't have the value, then we set it.
+      if (!memo[key]) {
+        memo[key] = val;
+      }
+
+      // Otherwise, if we have the value, and it's an array,
+      // then we push to it.
+      else if (_.isArray(memo[key])) {
+        memo[key].push(val);
+      }
+
+      // Otherwise, we have a value that is not yet an array,
+      // so we convert it to an array, adding the newest value.
+      else {
+        memo[key] = [memo[key], val];
+      }
+
+      return memo;
+    }, {});
   },
 
   // Returns the named parameters of the route

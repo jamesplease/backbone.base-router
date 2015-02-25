@@ -295,7 +295,7 @@ describe('Base Router', function() {
     });
 
     it('should pass the parsed query params, not parsing the array-like syntax', function() {
-      expect(this.routeData.query).to.deep.equal({letters: 'c'});
+      expect(this.routeData.query).to.deep.equal({letters: ['a', 'b', 'c']});
     });
 
     it('should pass an empty object for named params', function() {
@@ -336,7 +336,7 @@ describe('Base Router', function() {
     });
 
     it('should pass the parsed query params, not parsing the array-like syntax', function() {
-      expect(this.routeData.query).to.deep.equal({letters: 'c'});
+      expect(this.routeData.query).to.deep.equal({letters: ['a', 'b', 'c']});
     });
 
     it('should pass an empty object for named params', function() {
