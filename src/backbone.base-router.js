@@ -29,7 +29,7 @@ Backbone.BaseRouter = Backbone.Router.extend({
       routeStr = origRoute;
     }
 
-    this.routeParams[origRoute] = this._extractRouteParams(routeStr);
+    this.routeParams[origRoute] = _.invoke(routeStr.match(NAMED_PARAM), 'slice', 1);
 
     // Begin setting up our routeData,
     // based on what we already know.
@@ -60,10 +60,6 @@ Backbone.BaseRouter = Backbone.Router.extend({
     });
 
     return this;
-  },
-
-  _extractRouteParams: function(route) {
-    return _.invoke(route.match(NAMED_PARAM), 'slice', 1);
   },
 
   // Decodes the Url query string parameters & and returns them
