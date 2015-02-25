@@ -1,4 +1,4 @@
-// Backbone.BaseRouter v0.5.0
+// Backbone.BaseRouter v1.0.0
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     define(['backbone', 'underscore'], function(Backbone, _) {
@@ -20,8 +20,10 @@
   // Backbone.BaseRouter
   //
   
-  // Copied over from Backbone, because it doesn't expose them.
-  var namedParam = /(\(\?)?:\w+/g;
+  // This is copied over from Backbone, because it doesn't expose it
+  var NAMED_PARAM = /(\(\?)?:\w+/g;
+  // Find plus symbols
+  var PLUS_SYMBOL = /\+/g;
   
   Backbone.BaseRouter = Backbone.Router.extend({
     constructor: function() {
@@ -81,7 +83,7 @@
     _extractRouteParams: function(route) {
       var namedParams = [];
   
-      route.replace(namedParam, function(match, optional) {
+      route.replace(NAMED_PARAM, function(match, optional) {
         namedParams.push(match.substr(1));
       });
   
@@ -94,20 +96,33 @@
     _getQueryParameters: function(queryString) {
       if (!queryString) { return {}; }
   
-      var match;
-      var search = /([^&=]+)=?([^&]*)/g;
-      var urlParams = {};
+      return _.reduce(queryString.split('&'), function(memo, param) {
+        var parts = param.replace(PLUS_SYMBOL, ' ').split('=');
+        var key = parts[0];
+        var val = parts[1];
   
-      while (match = search.exec(queryString)) {
-         urlParams[this._decodeParams(match[1])] = this._decodeParams(match[2]);
-      }
+        key = decodeURIComponent(key);
+        val = val === undefined ? null : decodeURIComponent(val);
   
-      return urlParams;
-    },
+        // If we don't have the value, then we set it.
+        if (!memo[key]) {
+          memo[key] = val;
+        }
   
-    _decodeParams: function (queryString) {
-      // Replace addition symbol with a space
-      return decodeURIComponent(queryString.replace(/\+/g, ' '));
+        // Otherwise, if we have the value, and it's an array,
+        // then we push to it.
+        else if (_.isArray(memo[key])) {
+          memo[key].push(val);
+        }
+  
+        // Otherwise, we have a value that is not yet an array,
+        // so we convert it to an array, adding the newest value.
+        else {
+          memo[key] = [memo[key], val];
+        }
+  
+        return memo;
+      }, {});
     },
   
     // Returns the named parameters of the route

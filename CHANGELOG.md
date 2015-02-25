@@ -1,3 +1,13 @@
+### [1.0.0](https://github.com/jmeas/backbone.radio/releases/tag/v1.0.0)
+
+- **Enhancement**: Adds support for multiple query parameters of the same name. They
+  are returned as an array.
+
+### [0.5.0](https://github.com/jmeas/backbone.radio/releases/tag/v0.5.0)
+
+- Updated Backbone dependency
+- Tests against multiple versions of Backbone/Underscore
+
 ### [0.4.1](https://github.com/jmeas/backbone.radio/releases/tag/v0.4.1)
 
 - **Bug fix**: Uses the constructor on the Router's prototype
