@@ -63,13 +63,7 @@ Backbone.BaseRouter = Backbone.Router.extend({
   },
 
   _extractRouteParams: function(route) {
-    var namedParams = [];
-
-    route.replace(NAMED_PARAM, function(match, optional) {
-      namedParams.push(match.substr(1));
-    });
-
-    return namedParams;
+    return _.invoke(route.match(NAMED_PARAM), 'slice', 1);
   },
 
   // Decodes the Url query string parameters & and returns them
