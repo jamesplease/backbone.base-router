@@ -1,4 +1,4 @@
-// Backbone.BaseRouter v1.0.0
+// Backbone.BaseRouter v1.1.0
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     define(['backbone', 'underscore'], function(Backbone, _) {
@@ -47,7 +47,7 @@
         routeStr = origRoute;
       }
   
-      this.routeParams[origRoute] = this._extractRouteParams(routeStr);
+      this.routeParams[origRoute] = _.invoke(routeStr.match(NAMED_PARAM), 'slice', 1);
   
       // Begin setting up our routeData,
       // based on what we already know.
@@ -78,16 +78,6 @@
       });
   
       return this;
-    },
-  
-    _extractRouteParams: function(route) {
-      var namedParams = [];
-  
-      route.replace(NAMED_PARAM, function(match, optional) {
-        namedParams.push(match.substr(1));
-      });
-  
-      return namedParams;
     },
   
     // Decodes the Url query string parameters & and returns them

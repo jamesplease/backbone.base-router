@@ -1,3 +1,7 @@
+### [1.1.0](https://github.com/jmeas/backbone.radio/releases/tag/1.1.0)
+
+- Updated dependencies to include the latest Backbone and Underscore versions.
+
 ### [1.0.0](https://github.com/jmeas/backbone.radio/releases/tag/v1.0.0)
 
 - **Enhancement**: Adds support for multiple query parameters of the same name. They
