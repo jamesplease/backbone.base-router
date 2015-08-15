@@ -22,3 +22,4 @@ install:
   # Which matrix settings -- otherwise default
   - if [[ $MAINRUN == false ]]; then npm install backbone@$BACKBONE; fi
   - if [[ $MAINRUN == false ]]; then npm install underscore@$UNDERSCORE; fi
+sudo: false
