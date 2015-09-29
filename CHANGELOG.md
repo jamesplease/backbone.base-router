@@ -1,3 +1,8 @@
+### [1.2.0](https://github.com/jmeas/backbone.radio/releases/tag/1.2.0)
+
+- **New feature:** The `routeData` Object now returns the original query string under `queryString`
+- **New feature:** Splat values are now included in `routeData.params`
+
 ### [1.1.0](https://github.com/jmeas/backbone.radio/releases/tag/1.1.0)
 
 - Updated dependencies to include the latest Backbone and Underscore versions.
