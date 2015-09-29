@@ -13,7 +13,7 @@ describe('Base Router', function() {
       Backbone.history.location = new this.Location('http://example.com/example');
       this.router.route('example', {hungry: true});
       Backbone.history.start({pushState: true});
-      this.regularKeys = ['linked', 'route', 'originalRoute', 'params', 'query', 'router', 'uriFragment'];
+      this.regularKeys = ['linked', 'route', 'originalRoute', 'params', 'query', 'queryString', 'router', 'uriFragment'];
     });
 
     it('should trigger onNavigate', function() {
@@ -46,6 +46,10 @@ describe('Base Router', function() {
 
     it('should pass an empty object for query params', function() {
       expect(this.routeData.query).to.deep.equal({});
+    });
+
+    it('should pass undefined for queryString', function() {
+      expect(this.routeData.queryString).to.equal(undefined);
     });
 
     it('should pass an empty object for named params', function() {
@@ -58,7 +62,7 @@ describe('Base Router', function() {
       Backbone.history.location = new this.Location('http://example.com#example');
       this.router.route('example', {hungry: true});
       Backbone.history.start({pushState: false});
-      this.regularKeys = ['linked', 'route', 'originalRoute', 'params', 'query', 'router', 'uriFragment'];
+      this.regularKeys = ['linked', 'route', 'originalRoute', 'params', 'query', 'queryString', 'router', 'uriFragment'];
     });
 
     it('should trigger onNavigate', function() {
@@ -91,6 +95,10 @@ describe('Base Router', function() {
 
     it('should pass an empty object for query params', function() {
       expect(this.routeData.query).to.deep.equal({});
+    });
+
+    it('should pass undefined for queryString', function() {
+      expect(this.routeData.queryString).to.equal(undefined);
     });
 
     it('should pass an empty object for named params', function() {
@@ -134,6 +142,10 @@ describe('Base Router', function() {
       expect(this.routeData.query).to.deep.equal({});
     });
 
+    it('should pass undefined for queryString', function() {
+      expect(this.routeData.queryString).to.equal(undefined);
+    });
+
     it('should pass the parsed URI params', function() {
       expect(this.routeData.params).to.deep.equal({id: '2', chapter: '4'});
     });
@@ -173,6 +185,10 @@ describe('Base Router', function() {
 
     it('should pass an empty object for query params', function() {
       expect(this.routeData.query).to.deep.equal({});
+    });
+
+    it('should pass undefined for queryString', function() {
+      expect(this.routeData.queryString).to.equal(undefined);
     });
 
     it('should pass the parsed URI params', function() {
@@ -216,6 +232,10 @@ describe('Base Router', function() {
       expect(this.routeData.query).to.deep.equal({james: 'true', hungry: '3'});
     });
 
+    it('should pass the original query string', function() {
+      expect(this.routeData.queryString).to.equal('james=true&hungry=3');
+    });
+
     it('should pass an empty object for named params', function() {
       expect(this.routeData.params).to.deep.equal({});
     });
@@ -255,6 +275,10 @@ describe('Base Router', function() {
 
     it('should pass the parsed query params', function() {
       expect(this.routeData.query).to.deep.equal({james: 'true', hungry: '3'});
+    });
+
+    it('should pass the original query string', function() {
+      expect(this.routeData.queryString).to.equal('james=true&hungry=3');
     });
 
     it('should pass an empty object for named params', function() {
@@ -298,6 +322,10 @@ describe('Base Router', function() {
       expect(this.routeData.query).to.deep.equal({letters: ['a', 'b', 'c']});
     });
 
+    it('should pass the original query string', function() {
+      expect(this.routeData.queryString).to.equal('letters=a&letters=b&letters=c');
+    });
+
     it('should pass an empty object for named params', function() {
       expect(this.routeData.params).to.deep.equal({});
     });
@@ -337,6 +365,10 @@ describe('Base Router', function() {
 
     it('should pass the parsed query params, not parsing the array-like syntax', function() {
       expect(this.routeData.query).to.deep.equal({letters: ['a', 'b', 'c']});
+    });
+
+    it('should pass the original query string', function() {
+      expect(this.routeData.queryString).to.equal('letters=a&letters=b&letters=c');
     });
 
     it('should pass an empty object for named params', function() {
@@ -380,8 +412,12 @@ describe('Base Router', function() {
       expect(this.routeData.query).to.deep.equal({});
     });
 
+    it('should pass undefined for queryString', function() {
+      expect(this.routeData.queryString).to.equal(undefined);
+    });
+
     it('should pass the parsed named param', function() {
-      expect(this.routeData.params).to.deep.equal({id: '3'});
+      expect(this.routeData.params).to.deep.equal({id: '3', splat: 'deeply/nested/splat'});
     });
   });
 
@@ -421,8 +457,12 @@ describe('Base Router', function() {
       expect(this.routeData.query).to.deep.equal({});
     });
 
+    it('should pass undefined for queryString', function() {
+      expect(this.routeData.queryString).to.equal(undefined);
+    });
+
     it('should pass the parsed named param', function() {
-      expect(this.routeData.params).to.deep.equal({id: '3'});
+      expect(this.routeData.params).to.deep.equal({id: '3', splat: 'deeply/nested/splat'});
     });
   });
 
@@ -461,8 +501,12 @@ describe('Base Router', function() {
       expect(this.routeData.query).to.deep.equal({name: 'james'});
     });
 
+    it('should pass the original query string', function() {
+      expect(this.routeData.queryString).to.equal('name=james');
+    });
+
     it('should pass an empty object for the named params', function() {
-      expect(this.routeData.params).to.deep.equal({});
+      expect(this.routeData.params).to.deep.equal({splat: 'deeply/nested/splat'});
     });
   });
 
@@ -501,8 +545,12 @@ describe('Base Router', function() {
       expect(this.routeData.query).to.deep.equal({name: 'james'});
     });
 
+    it('should pass the original query string', function() {
+      expect(this.routeData.queryString).to.equal('name=james');
+    });
+
     it('should pass an empty object for the named params', function() {
-      expect(this.routeData.params).to.deep.equal({});
+      expect(this.routeData.params).to.deep.equal({splat: 'deeply/nested/splat'});
     });
   });
 
@@ -540,6 +588,10 @@ describe('Base Router', function() {
 
     it('should pass an empty object for query params', function() {
       expect(this.routeData.query).to.deep.equal({});
+    });
+
+    it('should pass undefined for queryString', function() {
+      expect(this.routeData.queryString).to.equal(undefined);
     });
 
     it('should pass empty named params', function() {
@@ -581,6 +633,10 @@ describe('Base Router', function() {
 
     it('should pass an empty object for query params', function() {
       expect(this.routeData.query).to.deep.equal({});
+    });
+
+    it('should pass undefined for queryString', function() {
+      expect(this.routeData.queryString).to.equal(undefined);
     });
 
     it('should pass empty named params', function() {

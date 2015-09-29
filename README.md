@@ -102,6 +102,10 @@ from the URL.
 
 An object representation of the query string in the URI fragment.
 
+##### `queryString`
+
+The original query string in the URI fragment. `undefined` if no query string given
+
 ##### `router`
 
 The router instance that this route was registered on.
