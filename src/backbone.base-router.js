@@ -3,7 +3,7 @@
 //
 
 // This is copied over from Backbone, because it doesn't expose it
-var NAMED_PARAM = /(\(\?)?:\w+/g;
+var NAMED_PARAM = /(\(\?)?[:*]\w+/g;
 // Find plus symbols
 var PLUS_SYMBOL = /\+/g;
 

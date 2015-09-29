@@ -381,7 +381,7 @@ describe('Base Router', function() {
     });
 
     it('should pass the parsed named param', function() {
-      expect(this.routeData.params).to.deep.equal({id: '3'});
+      expect(this.routeData.params).to.deep.equal({id: '3', splat: 'deeply/nested/splat'});
     });
   });
 
@@ -422,7 +422,7 @@ describe('Base Router', function() {
     });
 
     it('should pass the parsed named param', function() {
-      expect(this.routeData.params).to.deep.equal({id: '3'});
+      expect(this.routeData.params).to.deep.equal({id: '3', splat: 'deeply/nested/splat'});
     });
   });
 
@@ -462,7 +462,7 @@ describe('Base Router', function() {
     });
 
     it('should pass an empty object for the named params', function() {
-      expect(this.routeData.params).to.deep.equal({});
+      expect(this.routeData.params).to.deep.equal({splat: 'deeply/nested/splat'});
     });
   });
 
@@ -502,7 +502,7 @@ describe('Base Router', function() {
     });
 
     it('should pass an empty object for the named params', function() {
-      expect(this.routeData.params).to.deep.equal({});
+      expect(this.routeData.params).to.deep.equal({splat: 'deeply/nested/splat'});
     });
   });
 
