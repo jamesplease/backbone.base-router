@@ -1,4 +1,4 @@
-// Backbone.BaseRouter v1.1.0
+// Backbone.BaseRouter v1.2.0
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     define(['backbone', 'underscore'], function(Backbone, _) {
@@ -21,7 +21,7 @@
   //
   
   // This is copied over from Backbone, because it doesn't expose it
-  var NAMED_PARAM = /(\(\?)?:\w+/g;
+  var NAMED_PARAM = /(\(\?)?[:*]\w+/g;
   // Find plus symbols
   var PLUS_SYMBOL = /\+/g;
   
@@ -70,6 +70,7 @@
   
         // If the user is using baseHistory, then we'll get the navOptions back from BB.History
         if (navOptions) { routeData.navOptions = navOptions; }
+        routeData.queryString = queryString ? queryString : undefined;
         routeData.query = router._getQueryParameters(queryString);
         routeData.params = router._getNamedParams(routeStr, routeParams);
         routeData.uriFragment = fragment;
