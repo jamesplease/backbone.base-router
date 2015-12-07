@@ -1,3 +1,7 @@
+### [1.3.0](https://github.com/jmeas/backbone.base-router/releases/tag/1.3.0)
+
+- Updated dependencies to include the latest Backbone versions.
+
 ### [1.2.0](https://github.com/jmeas/backbone.base-router/releases/tag/1.2.0)
 
 - **New feature:** The `routeData` Object now returns the original query string under `queryString`

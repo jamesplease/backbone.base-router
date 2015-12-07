@@ -1,4 +1,4 @@
-// Backbone.BaseRouter v1.2.0
+// Backbone.BaseRouter v1.3.0
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     define(['backbone', 'underscore'], function(Backbone, _) {
