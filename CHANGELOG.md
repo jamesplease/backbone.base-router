@@ -1,3 +1,7 @@
+### [1.3.2](https://github.com/jmeas/backbone.base-router/releases/tag/1.3.2)
+
+- Update to support Lodash v4
+
 ### [1.3.1](https://github.com/jmeas/backbone.base-router/releases/tag/1.3.1)
 
 - Updated dependencies to include the latest Backbone versions.
