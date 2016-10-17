@@ -29,7 +29,9 @@ Backbone.BaseRouter = Backbone.Router.extend({
       routeStr = origRoute;
     }
 
-    this.routeParams[origRoute] = _.invoke(routeStr.match(NAMED_PARAM), 'slice', 1);
+    this.routeParams[origRoute] = _.map(routeStr.match(NAMED_PARAM), function (param) {
+        return param.slice(1);
+    });
 
     // Begin setting up our routeData,
     // based on what we already know.
@@ -104,7 +106,9 @@ Backbone.BaseRouter = Backbone.Router.extend({
 
     var routeKeys = this.routeParams[route];
     var routeValues = routeParams.slice(0, routeKeys.length);
-
-    return _.object(_.zip(routeKeys, routeValues));
+    return _.reduce(_.zip(routeKeys, routeValues), function (obj, opts) {
+        obj[opts[0]] = opts[1];
+        return obj;
+    }, {});
   }
 });
